@@ -22,8 +22,10 @@ struct ContentView: View {
     
     
     func addNewTask() {
+          print(newTask)
         tList.tasks.append(Task(id: String(tList.tasks.count + 1), taskItem: newTask))
         self.newTask = ""
+        print(newTask)
     }
     
     var addTaskBar : some View{
@@ -34,34 +36,47 @@ struct ContentView: View {
     }
     
     
-    
+    func rowRemove(offsets: IndexSet) {
+        self.tList.tasks.remove(atOffsets: offsets)
+    }
     
     
     var body: some View {
         
-        
         NavigationView {
+            
             VStack {
+                
                 addTaskBar.padding()
                 List {
                     ForEach(self.tList.tasks) { Index in
                     Text(Index.taskItem)
-                        
-
                     }
-                    
-                }.navigationBarTitle("Taskリスト")
+                    //delete追加
+                    .onDelete(perform: rowRemove)
+                   
+                }
+                //editButton追加
+               
+                .navigationBarTitle("Taskリスト")
+                .navigationBarItems(trailing: EditButton())
+                
             }
             
         }
         
+        
     }
-}
+    
+    
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        
     }
     
     
+}
 }

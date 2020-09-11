@@ -18,6 +18,7 @@ struct Task: Identifiable {
 }
 
 class TaskList: ObservableObject {
+    
       @Published var tasks = [Task]()
 }
 
